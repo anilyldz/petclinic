@@ -21,22 +21,22 @@ public class OwnerRepositoryInMemoryImpl implements OwnerRepository {
 		Owner owner1 = new Owner();
 		owner1.setId(1L);
 		owner1.setFirstName("Anil");
-		owner1.setLastName("Yıldız");
+		owner1.setLastName("Yildiz");
 		
 		Owner owner2 = new Owner();
 		owner2.setId(2L);
-		owner2.setFirstName("Cansın");
-		owner2.setLastName("Yıldız");
+		owner2.setFirstName("Cansin");
+		owner2.setLastName("Yildiz");
 		
 		Owner owner3 = new Owner();
 		owner3.setId(3L);
 		owner3.setFirstName("Kaan");
-		owner3.setLastName("Akyıldız");
+		owner3.setLastName("Akyildiz");
 		
 		Owner owner4 = new Owner();
 		owner4.setId(4L);
 		owner4.setFirstName("Naciye");
-		owner4.setLastName("Akyıldız");
+		owner4.setLastName("Akyildiz");
 		
 		ownersMap.put(owner1.getId(), owner1);
 		ownersMap.put(owner2.getId(), owner2);

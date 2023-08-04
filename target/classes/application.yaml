@@ -1,4 +1,4 @@
-logging:
-  level:
-    org.springframework.web: debug
-  file: petclinic.log
+#logging:
+#  level:
+#    org.springframework.web: debug
+#  file: petclinic.log

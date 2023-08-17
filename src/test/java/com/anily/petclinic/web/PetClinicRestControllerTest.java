@@ -1,5 +1,6 @@
 package com.anily.petclinic.web;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -9,9 +10,12 @@ import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.anily.petclinic.model.Owner;
+
+import junit.framework.Assert;
 
 public class PetClinicRestControllerTest {
 
@@ -21,6 +25,48 @@ public class PetClinicRestControllerTest {
 	public void setUp() {
 		restTemplate = new RestTemplate();
 	}
+	
+	@Test
+	public void testDeleteOwner() {
+		restTemplate.delete("http://localhost:8080/rest/owner/1");
+		
+		try {
+			restTemplate.getForEntity("http://localhost:8080/rest/owner/1", Owner.class);
+			Assert.fail("Should have not returned");
+		} catch (RestClientException ex) {
+
+		}
+		
+		
+	}
+	
+	@Test
+	public void testUpdateOwner() {
+		Owner owner = restTemplate.getForObject("http://localhost:8080/rest/owner/1", Owner.class);
+		MatcherAssert.assertThat(owner.getFirstName(), Matchers.equalTo("Anil"));
+		owner.setFirstName("Anil2");
+		restTemplate.put("http://localhost:8080/rest/owner/1", owner);
+		
+		owner = restTemplate.getForObject("http://localhost:8080/rest/owner/1", Owner.class);
+		
+		MatcherAssert.assertThat(owner.getFirstName(), Matchers.equalTo("Anil2"));
+		
+	}
+	
+	
+	@Test
+	public void testCreateOwner() {
+		Owner owner = new Owner();
+		owner.setFirstName("Ezgi");
+		owner.setLastName("Yildiz");
+		
+		URI location = restTemplate.postForLocation("http://localhost:8080/rest/owner", owner);
+		Owner owner2 = restTemplate.getForObject(location, Owner.class);
+		
+		MatcherAssert.assertThat(owner2.getFirstName(), Matchers.equalTo(owner.getFirstName()));
+		MatcherAssert.assertThat(owner2.getLastName(), Matchers.equalTo(owner.getLastName()));
+	}
+	
 
 	@Test
 	public void testGetOwnerById() {
